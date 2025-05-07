@@ -1,0 +1,338 @@
+" ----------------------------------------------
+" 🧠 BASIC VIM CONFIGURATION FOR SCHOOL 42
+" No helpers that wouldn't be available during exams
+" Just clarity, focus, and a good experience
+" ----------------------------------------------
+
+syntax on
+
+let g:user41 = 'madurgan'
+let g:mail41 = 'madurgan@student.42barcelona.com'
+
+" ✅ Enable syntax highlighting
+syntax on
+" 📌 This turns on color-coding for code syntax:
+"     Keywords, types, functions, strings, comments, etc.
+" 🧪 Try it: Open a .c file — you'll see 'int' in one color, 'return' in another.
+" 🎯 Why: Makes reading and debugging much easier.
+
+
+" ✅ Show absolute line numbers on the left
+set number
+" 📌 This displays the actual line number of each line.
+" 🧪 Try: `gcc main.c -o prog` → If you get "error: line 34", use `34G` to jump there.
+" 🎯 Why: Useful for navigating big files and matching compiler errors.
+
+
+" ✅ Highlight the current line where your cursor is
+set cursorline
+" 📌 Visually emphasizes the row you’re working on.
+" 🧪 Try: Move around with `j/k` — the active line stays highlighted.
+" 🎯 Why: Helps you stay focused in long files or nested logic.
+
+
+" ✅ Use real tab characters (not spaces)
+set noexpandtab
+" 📌 By default, Vim might insert spaces when you press TAB — but 42’s Norminette **requires** real tab characters.
+" 🧪 Try: Press `<Tab>` in insert mode, then move the cursor over it → it moves as a single character.
+" 🎯 Why: Prevents Norminette violations, helps build proper habits.
+
+
+" ✅ Set how wide the tab character appears
+set tabstop=8
+" 📌 This makes tabs visually take up 8 spaces (default for most terminals, including 42 machines).
+" 🧪 Try: Put a few tabs in a line, then count the spacing.
+" 🎯 Why: Matches Norminette’s expectations for indentation layout.
+
+
+" ✅ Set how many spaces to use for >> (indent) and << (unindent)
+set shiftwidth=8
+" 📌 This controls how far lines shift when you auto-indent with `>>` or unindent with `<<`.
+" 🧪 Try: Press `>>` on a line — it will move right by 1 tab width.
+" 🎯 Why: Keeps your indenting consistent with your tab settings.
+
+
+" ✅ Automatically indent new lines to match the previous one
+set autoindent
+" 📌 When you press Enter, the new line starts at the same indent level.
+" 🧪 Try: Type a function, press Enter — it stays aligned.
+" 🎯 Why: Saves time and keeps structure visually neat.
+
+
+" ✅ Smart indenting (for C-style code blocks)
+set smartindent
+" 📌 This adds an extra level of indentation inside curly braces.
+" 🧪 Try: Type `{`, press Enter → next line is indented automatically.
+" 🎯 Why: Helps you structure loops, functions, and conditionals faster.
+
+
+" ✅ Don’t wrap long lines to the next line
+set nowrap
+" 📌 Keeps lines horizontal, even if they go beyond the screen.
+" 🧪 Try: Create a very long `printf()` and scroll with the arrow keys or `l/h`.
+" 🎯 Why: Norminette requires you to manually track line length — this mimics that environment.
+
+
+" ✅ Set file encoding to UTF-8
+set encoding=utf-8
+" 📌 This ensures proper handling of text files (accents, emojis, symbols).
+" 🧪 Try: Insert something like `é` or `ñ` and save — it won't break.
+" 🎯 Why: Prevents strange behavior when editing or compiling files with comments in multiple languages.
+
+
+" ✅ Enable incremental search
+set incsearch
+" 📌 As you type `/yourSearch`, it highlights and jumps to the first match live.
+" 🧪 Try: Type `/main` — it jumps as you type each letter.
+" 🎯 Why: Helps you find what you need faster without hitting Enter first.
+
+
+" ✅ Highlight all matches when searching
+set hlsearch
+" 📌 After pressing Enter from a `/search`, all matches remain highlighted.
+" 🧪 Try: `/return`, press Enter — every return in the file lights up.
+" 🎯 Why: Makes code auditing and debugging much faster.
+" 🔁 Tip: Run `:noh` to clear the highlights.
+
+
+" ✅ Ignore case in searches...
+set ignorecase
+" 📌 Makes searches case-insensitive unless you use uppercase letters.
+" 🧪 Try: `/main` matches "Main", "MAIN", "main" — all of them.
+" 🎯 Why: Saves time during general searching.
+
+
+" ✅ ...unless you use a capital letter (Smartcase)
+set smartcase
+" 📌 Now `/Main` will only match "Main", not "main".
+" 🎯 Why: Combines best of both worlds — loose search when lazy, precise when strict.
+
+
+" ✅ Highlight matching brackets when the cursor is on one
+set showmatch
+" 📌 When your cursor is on `(`, it briefly jumps to the matching `)`.
+" 🧪 Try: Place your cursor on a `{` — it blinks to the closing one.
+" 🎯 Why: Crucial for debugging nested code blocks.
+
+
+" ✅ Show what command you're typing at the bottom
+set showcmd
+" 📌 Shows partial commands like `d`, `dd`, `:w` before you finish them.
+" 🧪 Try: Press `d`, wait — it displays `d` until you complete the motion (`dw`, `dd`, etc).
+" 🎯 Why: Gives you feedback while you’re learning Vim’s command language.
+
+
+" ✅ Show which mode you're in (INSERT, VISUAL, etc.)
+set showmode
+" 📌 Displays your mode at the bottom while editing.
+" 🧪 Try: Press `i`, it says `-- INSERT --`. Press `v`, it says `-- VISUAL --`.
+" 🎯 Why: Avoids confusion about where your keys will take effect.
+
+
+" ✅ Always show the status line (bottom bar)
+set laststatus=2
+" 📌 This keeps the bottom info bar always visible.
+" 🎯 Why: You can see filename, mode, encoding, and cursor location at all times.
+
+
+" ✅ Show line/column number of your cursor in the bottom bar
+set ruler
+" 📌 Shows something like `Ln 12, Col 42` in the corner.
+" 🎯 Why: Helps monitor line length, location, and match error messages.
+
+
+" ✅ Ask before closing unsaved files
+set confirm
+" 📌 Prevents accidental quitting — it’ll ask "Save changes?" if needed.
+" 🎯 Why: Good safety net, especially when tired or stressed.
+
+
+" ✅ Make Backspace work in all the ways you'd expect
+set backspace=indent,eol,start
+" 📌 This makes backspace delete:
+"   - Indentation
+"   - End-of-line newlines
+"   - Text before where you started editing
+" 🎯 Why: Without this, backspace may act weird or fail.
+
+
+" ✅ Use better tab-completion in command line (e.g., `:e ma<Tab>` → `main.c`)
+set wildmenu
+set wildmode=longest:full,full
+" 📌 Adds a nice dropdown-like completion in the command bar.
+" 🧪 Try: `:e <Tab>` — see the file suggestions.
+" 🎯 Why: Helps you autocomplete paths, commands, buffers, etc.
+
+
+" ✅ Enable mouse support in all modes
+set mouse=a
+" 📌 Lets you use the mouse to:
+"   - Move the cursor
+"   - Select text
+"   - Scroll
+" 🎯 Why: Not always needed during exams, but helpful during practice.
+
+
+" ✅ Enable syntax highlighting
+syntax on
+" 📌 This turns on color-coding for code syntax:
+"     Keywords, types, functions, strings, comments, etc.
+" 🧪 Try it: Open a .c file — you'll see 'int' in one color, 'return' in another.
+" 🎯 Why: Makes reading and debugging much easier.
+
+
+" ✅ Show absolute line numbers on the left
+set number
+" 📌 This displays the actual line number of each line.
+" 🧪 Try: `gcc main.c -o prog` → If you get "error: line 34", use `34G` to jump there.
+" 🎯 Why: Useful for navigating big files and matching compiler errors.
+
+
+" ✅ Highlight the current line where your cursor is
+set cursorline
+" 📌 Visually emphasizes the row you’re working on.
+" 🧪 Try: Move around with `j/k` — the active line stays highlighted.
+" 🎯 Why: Helps you stay focused in long files or nested logic.
+
+
+" ✅ Use real tab characters (not spaces)
+set noexpandtab
+" 📌 By default, Vim might insert spaces when you press TAB — but 42’s Norminette **requires** real tab characters.
+" 🧪 Try: Press `<Tab>` in insert mode, then move the cursor over it → it moves as a single character.
+" 🎯 Why: Prevents Norminette violations, helps build proper habits.
+
+
+" ✅ Set how wide the tab character appears
+set tabstop=4
+" 📌 This makes tabs visually take up 8 spaces (default for most terminals, including 42 machines).
+" 🧪 Try: Put a few tabs in a line, then count the spacing.
+" 🎯 Why: Matches Norminette’s expectations for indentation layout.
+
+
+" ✅ Set how many spaces to use for >> (indent) and << (unindent)
+set shiftwidth=4
+" 📌 This controls how far lines shift when you auto-indent with `>>` or unindent with `<<`.
+" 🧪 Try: Press `>>` on a line — it will move right by 1 tab width.
+" 🎯 Why: Keeps your indenting consistent with your tab settings.
+
+
+" ✅ Automatically indent new lines to match the previous one
+set autoindent
+" 📌 When you press Enter, the new line starts at the same indent level.
+" 🧪 Try: Type a function, press Enter — it stays aligned.
+" 🎯 Why: Saves time and keeps structure visually neat.
+
+
+" ✅ Smart indenting (for C-style code blocks)
+set smartindent
+" 📌 This adds an extra level of indentation inside curly braces.
+" 🧪 Try: Type `{`, press Enter → next line is indented automatically.
+" 🎯 Why: Helps you structure loops, functions, and conditionals faster.
+
+
+" ✅ Don’t wrap long lines to the next line
+set nowrap
+" 📌 Keeps lines horizontal, even if they go beyond the screen.
+" 🧪 Try: Create a very long `printf()` and scroll with the arrow keys or `l/h`.
+" 🎯 Why: Norminette requires you to manually track line length — this mimics that environment.
+
+
+" ✅ Set file encoding to UTF-8
+set encoding=utf-8
+" 📌 This ensures proper handling of text files (accents, emojis, symbols).
+" 🧪 Try: Insert something like `é` or `ñ` and save — it won't break.
+" 🎯 Why: Prevents strange behavior when editing or compiling files with comments in multiple languages.
+
+
+" ✅ Enable incremental search
+set incsearch
+" 📌 As you type `/yourSearch`, it highlights and jumps to the first match live.
+" 🧪 Try: Type `/main` — it jumps as you type each letter.
+" 🎯 Why: Helps you find what you need faster without hitting Enter first.
+
+
+" ✅ Highlight all matches when searching
+set hlsearch
+" 📌 After pressing Enter from a `/search`, all matches remain highlighted.
+" 🧪 Try: `/return`, press Enter — every return in the file lights up.
+" 🎯 Why: Makes code auditing and debugging much faster.
+" 🔁 Tip: Run `:noh` to clear the highlights.
+
+
+" ✅ Ignore case in searches...
+set ignorecase
+" 📌 Makes searches case-insensitive unless you use uppercase letters.
+" 🧪 Try: `/main` matches "Main", "MAIN", "main" — all of them.
+" 🎯 Why: Saves time during general searching.
+
+
+" ✅ ...unless you use a capital letter (Smartcase)
+set smartcase
+" 📌 Now `/Main` will only match "Main", not "main".
+" 🎯 Why: Combines best of both worlds — loose search when lazy, precise when strict.
+
+
+" ✅ Highlight matching brackets when the cursor is on one
+set showmatch
+" 📌 When your cursor is on `(`, it briefly jumps to the matching `)`.
+" 🧪 Try: Place your cursor on a `{` — it blinks to the closing one.
+" 🎯 Why: Crucial for debugging nested code blocks.
+
+
+" ✅ Show what command you're typing at the bottom
+set showcmd
+" 📌 Shows partial commands like `d`, `dd`, `:w` before you finish them.
+" 🧪 Try: Press `d`, wait — it displays `d` until you complete the motion (`dw`, `dd`, etc).
+" 🎯 Why: Gives you feedback while you’re learning Vim’s command language.
+
+
+" ✅ Show which mode you're in (INSERT, VISUAL, etc.)
+set showmode
+" 📌 Displays your mode at the bottom while editing.
+" 🧪 Try: Press `i`, it says `-- INSERT --`. Press `v`, it says `-- VISUAL --`.
+" 🎯 Why: Avoids confusion about where your keys will take effect.
+
+
+" ✅ Always show the status line (bottom bar)
+set laststatus=2
+" 📌 This keeps the bottom info bar always visible.
+" 🎯 Why: You can see filename, mode, encoding, and cursor location at all times.
+
+
+" ✅ Show line/column number of your cursor in the bottom bar
+set ruler
+" 📌 Shows something like `Ln 12, Col 42` in the corner.
+" 🎯 Why: Helps monitor line length, location, and match error messages.
+
+
+" ✅ Ask before closing unsaved files
+set confirm
+" 📌 Prevents accidental quitting — it’ll ask "Save changes?" if needed.
+" 🎯 Why: Good safety net, especially when tired or stressed.
+
+
+" ✅ Make Backspace work in all the ways you'd expect
+set backspace=indent,eol,start
+" 📌 This makes backspace delete:
+"   - Indentation
+"   - End-of-line newlines
+"   - Text before where you started editing
+" 🎯 Why: Without this, backspace may act weird or fail.
+
+
+" ✅ Use better tab-completion in command line (e.g., `:e ma<Tab>` → `main.c`)
+set wildmenu
+set wildmode=longest:full,full
+" 📌 Adds a nice dropdown-like completion in the command bar.
+" 🧪 Try: `:e <Tab>` — see the file suggestions.
+" 🎯 Why: Helps you autocomplete paths, commands, buffers, etc.
+
+
+" ✅ Enable mouse support in all modes
+set mouse=a
+" 📌 Lets you use the mouse to:
+"   - Move the cursor
+"   - Select text
+"   - Scroll
+" 🎯 Why: Not always needed during exams, but helpful during practice.
+

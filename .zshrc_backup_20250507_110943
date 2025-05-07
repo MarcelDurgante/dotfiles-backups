@@ -1,0 +1,259 @@
+#############################################
+# 📦 SHELL CONFIGURATION FILE: ~/.zshrc
+# This file customizes how your terminal behaves
+# It runs automatically every time you open Terminal
+#############################################
+
+
+#############################################
+# 🎨 PROMPT SETUP
+#############################################
+
+# Load Zsh's built-in prompt system so we can use themes
+autoload -Uz promptinit      # 'autoload' loads Zsh functions, '-Uz' makes it silent and faster
+promptinit                   # Initializes the prompt system
+
+# Set the prompt style to 'adam1' (you can try other themes like 'pure', 'robbyrussell', 'walters')
+prompt adam1                 # Shows your user, current directory, and Git info if available
+
+# 👉 Example: After setting this, your terminal may look like:
+# user@mac ~/Projects/foo (main) $
+
+#############################################
+# 🧠 HISTORY SETTINGS
+#############################################
+
+# Don't save duplicate commands in your history
+setopt histignorealldups     # If you type 'ls' 5 times, only 1 will be saved
+
+# Share command history across all open terminal tabs/windows
+setopt sharehistory          # Makes command history universal across sessions
+
+# Store up to 1000 commands in memory for this session
+HISTSIZE=1000                # You can type 'history' to see previous commands
+
+# Save up to 1000 commands in the .zsh_history file so you can access them even after reboot
+SAVEHIST=1000
+
+# Where your saved command history is stored
+HISTFILE=~/.zsh_history      # Run: `cat ~/.zsh_history` to peek inside
+
+
+#############################################
+# ⌨️ KEYBOARD BEHAVIOR
+#############################################
+
+# Use emacs-style shortcuts in terminal even if your editor is set to vi
+bindkey -e
+# 👉 This means:
+# Ctrl+A = Move cursor to beginning of line
+# Ctrl+E = Move to end of line
+# Ctrl+U = Delete the whole line
+# Ctrl+K = Delete from cursor to end of line
+# Ctrl+W = Delete the previous word
+
+#############################################
+# 🚀 TAB COMPLETION SYSTEM
+# This section upgrades your terminal to have smart autocomplete.
+# It saves time, avoids typos, and shows useful suggestions as you type.
+#############################################
+
+# 🧠 Load and initialize the smart tab-completion engine
+autoload -Uz compinit  # Loads zsh’s completion system in the background
+compinit               # Activates it
+
+# 🔍 Enable automatic descriptions in completions
+zstyle ':completion:*' auto-description 'specify: %d'
+# 👉 Example:
+# Type: `git ch<TAB>` — you'll see: "specify: git checkout"
+# This tells you what the command you're about to autocomplete actually does
+
+# 🧠 Use multiple helpers for autocomplete:
+#   - _expand: expands aliases or variables
+#   - _complete: default completion for commands, files, etc.
+#   - _correct: fixes typos (e.g., 'mkaedir' → 'mkdir')
+#   - _approximate: fuzzy matching when you’re slightly off
+zstyle ':completion:*' completer _expand _complete _correct _approximate
+
+# 👉 Examples:
+#   - `gc<TAB>` → expands to `git commit` if you’ve set the alias
+#   - `ls Dwonloads<TAB>` → corrects to `Downloads`
+#   - `git commti<TAB>` → suggests `git commit`
+
+# 🎨 Show a nice formatted header when completing
+zstyle ':completion:*' format 'Completing %d'
+# 👉 Example:
+# Type: `code <TAB>` → it says “Completing file” or “Completing command”
+
+# 📁 Visually group completion options by type
+zstyle ':completion:*' group-name ''
+# 👉 Example:
+# When doing `kill <TAB>`, you'll see processes grouped in one section
+
+# 🧾 Show a menu if there are 2+ options
+zstyle ':completion:*' menu select=2
+# 👉 Example:
+# Type `git che<TAB>` → opens a menu with:
+#   git checkout
+#   git cherry
+#   git cherry-pick
+
+# 🌈 Enable colors in file completions (folders, executables, etc.)
+
+if command -v dircolors >/dev/null 2>&1; then
+  eval "$(dircolors -b)"  # Load system colors for files/folders
+  zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+fi
+# 👀 Additional formatting options for display (optional)
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+# 👉 You’ll see messages like:
+# At 50%: Hit TAB for more, or the character to insert
+
+# 🧠 Smart fuzzy matching so it guesses what you meant:
+#   - m:{a-z}={A-Z}: ignore case when matching
+#   - m:{a-zA-Z}={A-Za-z}: mix of upper/lowercase
+#   - r:|[._-]=*: tolerate '.', '_', or '-' differences
+#   - l:|=* or r:|=* = allow trailing or leading errors
+zstyle ':completion:*' matcher-list '' \
+  'm:{a-z}={A-Z}' \
+  'm:{a-zA-Z}={A-Za-z}' \
+  'r:|[._-]=* r:|=* l:|=*'
+
+# 👉 Examples:
+#   - `cd my-folder<TAB>` will match `my_folder` or `My.Folder`
+#   - `git CO<TAB>` can match `git commit`, `git checkout`, etc.
+
+# 📜 Show full scrollable menu when many options are available
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+# 👉 You’ll see an interactive scrolling list if too many suggestions are shown
+
+# 🛑 Disable old legacy system (compctl) to use only the modern one
+zstyle ':completion:*' use-compctl false
+
+# 💬 Give more information during completions (verbose mode)
+zstyle ':completion:*' verbose true
+# 👉 Example:
+# When completing a command, it might tell you the command's category, like "alias", "builtin", or "function"
+
+# 🔪 Advanced: Customize how process completion works when using 'kill'
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+# 👉 Try this:
+# Type: `kill <TAB>` — it shows a list of your running processes:
+#   PID  %CPU  TTY  TIME  CMD
+#   1234  0.1   ttys000  0:02.33  node
+#   5678  5.0   ttys001  1:23.45  chrome
+
+# ➕ You can then type: `kill 5678` to stop that process easily
+
+
+
+#############################################
+# 🎨 VISUAL IMPROVEMENTS
+#############################################
+
+# Load color definitions so that commands like `ls`, `grep`, `diff`, etc. can use colors.
+autoload -U colors && colors
+# 👉 This enables colorized output when you use commands like:
+#    `ls -G` (Mac) or `ls --color=auto` (Linux)
+#    `grep --color=auto "search_term" file.txt`
+#    `diff file1.txt file2.txt` will show red/green changes
+
+# 🎯 TIP:
+# To make colors work well with `ls`, also try this:
+# alias ls='ls -G'         # macOS
+# alias ls='ls --color=auto'  # Linux (Ubuntu, etc.)
+
+
+#############################################
+# 📝 DEFAULT EDITOR
+#############################################
+
+# Set your preferred text editor for terminal-based editing
+export EDITOR='nano'
+# 👉 Other options:
+#   - 'vim' — for advanced users
+#   - 'code -w' — opens VS Code and waits for you to close it
+#   - 'micro' — a friendly terminal editor (install with `brew install micro`)
+
+# 📌 This editor is used in commands like:
+#   - `git commit` (without -m)
+#   - `crontab -e`
+#   - `sudo visudo`
+
+
+#############################################
+# 💡 USEFUL ALIASES (Shortcuts)
+#############################################
+
+# 📁 File listing alias: easier and more readable
+alias ll='ls -lah'
+# 👉 Breakdown:
+#   - `ls` = list files
+#   - `-l` = long format (permissions, size, modified date)
+#   - `-a` = show hidden files
+#   - `-h` = human-readable file sizes like "10K", "2M", etc.
+# 👉 Example: `ll` in any directory shows a full detailed list
+
+# 🧪 Git helper aliases:
+alias gs='git status'        # Shows current branch, changes staged/unstaged, etc.
+alias gc='git commit -m'     # Shortcut for making commits with a message
+# 👉 Examples:
+#   - `gs` = check what’s going on in your repo
+#   - `gc "Add navbar component"` = commit with a message
+
+# 📂 Folder navigation shortcuts:
+alias ..='cd ..'             # Go up one directory
+alias ...='cd ../..'         # Go up two directories
+# 👉 Example:
+#   You're in `/Users/you/Projects/MyApp/src`
+#   Run `...` → now you’re in `/Users/you/Projects`
+
+
+#############################################
+# 🍺 HOMEBREW (if installed)
+#############################################
+
+# Load Homebrew environment (macOS, Intel or Apple Silicon) makes sure all brew-installed apps work in your terminal
+if [ -f /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -f /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+# 👉 This is critical on macOS with Apple Silicon (M1/M2/M3)
+# Homebrew might be installed in /opt/homebrew instead of /usr/local
+# This line ensures your terminal knows where to find apps like:
+#   - `htop`, `tmux`, `node`, `python`, etc. installed via `brew`
+
+# 🧪 Example:
+# You installed `tmux` using `brew install tmux`
+# Now you can just type `tmux` in your terminal without restarting
+
+# You can test if it works:
+# `which tmux` → should output something like `/opt/homebrew/bin/tmux`
+
+# Make GNU tools work under their normal names as Brew doesn’t overwrite macOS’s system commands; it installs GNU versions with a g prefix: gdircolors -> GNU dircolors, gls -> GNU ls...
+export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+
+# ==============================================
+# 🌟 Add custom scripts folder to PATH 🌟
+# This lets you run scripts from ~/scripts like regular commands
+# ==============================================
+
+# Create scripts folder if it doesn't exist
+if [ ! -d "$HOME/scripts" ]; then
+  mkdir -p "$HOME/scripts"
+  echo "✅ Created ~/scripts folder for custom scripts"
+fi
+
+# Add scripts folder to PATH (if not already added)
+if [[ ":$PATH:" != *":$HOME/scripts:"* ]]; then
+  export PATH="$HOME/scripts:$PATH"
+  echo "✅ Added ~/scripts to PATH"
+fi
+
+alias backupzsh="~/backup_zshrc.sh"
+
+alias backupdot="~/backup_dotfiles.sh"
